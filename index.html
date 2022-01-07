@@ -103,6 +103,7 @@ if ('OTPCredential' in window) {
                 await navigator.credentials
                   .get({ abort: signal, otp: { transport: ["sms"] } })
                   .then((content) => {
+                    document.getElementById("test").innerText = "in then block";
                     if (content && content.code) {
                       alert(content);
                       document.getElementById("test").innerText = "done";
