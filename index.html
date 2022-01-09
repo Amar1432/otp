@@ -41,7 +41,10 @@
                       heading.innerText = content.code;
                     }
                   })
-                  .catch((e) => console.log(e));
+                  .catch((e) => {
+                    heading.innerText = "promise failed";
+                    console.log(e);
+                  });
               } catch (e) {
                 return;
               }
