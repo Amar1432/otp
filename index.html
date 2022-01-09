@@ -19,7 +19,7 @@
     <script>
       const signal = new AbortController();
       setTimeout(() => {
-        signal.abort();
+        // signal.abort();
       }, 1 * 60 * 1000);
       async function main() {
         if ("OTPCredential" in window) {
