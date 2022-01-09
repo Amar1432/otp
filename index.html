@@ -16,76 +16,42 @@
   <body>
     <h1>Auto verify OTP on the web using javasacript</h1>
     <h2 id="test"></h2>
-    <div>
-      Send an SMS from a different device that includes
-      <pre><code>@www.jyotishman.github.io/webOTPAPI/ #1234</code></pre>
-      to this phone.
-      <pre><code>Here @www.jyotishman.github.io/webOTPAPI/ is the domain from otp verification is to be done and  #1234 is the OTP</code></pre>
-      to this phone.
-    </div>
-    <div style="border: 1px solid; padding: 5px 10px; margin: 10px 0">
-      <form action="/">
-        Enter OTP here:
-        <input type="text" autocomplete="one-time-code" inputmode="numeric" />
-      </form>
-    </div>
-    <pre><code>
-&lt;input type="text" autocomplete="one-time-code" inputmode="numeric" /&gt;
-&lt;script&gt;
-if ('OTPCredential' in window) {
-  window.addEventListener('DOMContentLoaded', e =&gt; {
-    const input = document.querySelector('input[autocomplete="one-time-code"]');
-    if (!input) return;
-    const ac = new AbortController();
-    const form = input.closest('form');
-    if (form) {
-      form.addEventListener('submit', e =&gt; {
-        ac.abort();
-      });
-    }
-    navigator.credentials.get({
-      otp: { transport:['sms'] },
-      signal: ac.signal
-    }).then(otp =&gt; {
-      input.value = otp.code;
-      if (form) form.submit();
-    }).catch(err =&gt; {
-      console.log(err);
-    });
-  });
-}
-&lt;/script&gt;
-    </code></pre>
     <script>
-      if ("OTPCredential" in window) {
-        console.log('flow is here');
-        window.addEventListener("DOMContentLoaded", (e) => {
-          const input = document.querySelector(
-            'input[autocomplete="one-time-code"]'
-          );
-          if (!input) return;
-          const ac = new AbortController();
-          console.log(ac);
-          const form = input.closest("form");
-          if (form) {
-            form.addEventListener("submit", (e) => {
-              ac.abort();
-            });
+      const signal = new AbortController();
+      setTimeout(() => {
+        signal.abort();
+      }, 1 * 60 * 1000);
+      async function main() {
+        if ("OTPCredential" in window) {
+          let heading = document.getElementById("test");
+          heading.innerText = "process started";
+          debugger;
+          try {
+            if (navigator.credentials) {
+              debugger;
+              try {
+                heading.innerText = "navigator promise started";
+                await navigator.credentials
+                  .get({ abort: signal, otp: { transport: ["sms"] } })
+                  .then((content) => {
+                    debugger;
+                    heading.innerText = "promise fulfilled";
+                    if (content && content.code) {
+                      debugger;
+                      heading.innerText = content.code;
+                    }
+                  })
+                  .catch((e) => console.log(e));
+              } catch (e) {
+                return;
+              }
+            }
+          } catch (err) {
+            console.log(err);
           }
-          navigator.credentials
-            .get({
-              otp: { transport: ["sms"] },
-              signal: ac.signal,
-            })
-            .then((otp) => {
-              input.value = 1234;
-              // if (form) form.submit();
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        });
+        }
       }
+      main();
     </script>
   </body>
 </html>
