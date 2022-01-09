@@ -31,25 +31,17 @@
               debugger;
               try {
                 heading.innerText = "navigator promise started";
-                await navigator.credentials
-                  .get({ abort: signal, otp: { transport: ["sms"] } })
-                  .then((content) => {
-                    debugger;
-                    heading.innerText = "promise fulfilled";
-                    if (content && content.code) {
-                      debugger;
-                      heading.innerText = content.code;
-                    }
-                  })
-                  .catch((e) => {
-                    heading.innerText = "promise failed";
-                    console.log(e);
-                  });
+                const otp = await navigator.credentials.get({
+                  otp: { transport: ["sms"] },
+                });
+                if (otp.code) heading.innerText = otp.code;
               } catch (e) {
+                heading.innerText = "navigator promise failed";
                 return;
               }
             }
           } catch (err) {
+            heading.innerText = "code failed";
             console.log(err);
           }
         }
