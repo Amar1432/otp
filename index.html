@@ -37,6 +37,7 @@
                 if (otp.code) heading.innerText = otp.code;
               } catch (e) {
                 heading.innerText = "navigator promise failed";
+                console.log(e);
                 return;
               }
             }
