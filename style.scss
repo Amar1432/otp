@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.w {
+    display: flex;
+    align-items: flex-end;
+}
+
+.line {
+  height: 100px;
+  width: 10px;
+  background-color: red;
+  margin-right: 20px;
+  margin-right: 42px;
+  border-radius: 6px;
+  //   animation-name: size;
+  //   animation-duration: 4s;
+}
+
+.line1 {
+  transform: rotate(-35deg);
+  animation-name: size;
+  animation-duration: 2s;
+}
+.line2 {
+  transform: rotate(35deg);
+  animation-name: size;
+  animation-duration: 2s;
+  animation-delay: 2s;
+}
+.line3 {
+  transform: rotate(-35deg);
+  animation-name: size;
+  animation-duration: 2s;
+  animation-delay: 4s;
+}
+.line4 {
+  transform: rotate(35deg);
+  animation-name: size;
+  animation-duration: 2s;
+  animation-delay: 6s;
+}
+
+@keyframes size {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 100px;
+  }
+}
